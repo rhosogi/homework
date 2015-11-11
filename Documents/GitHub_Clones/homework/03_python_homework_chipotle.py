@@ -56,11 +56,7 @@ with open ('chipotle.tsv', 'rb') as csvfile:
         def writerows(self, rows):
             for row in rows:
                 self.writerow(row)
-            print row
-        def writecol(self, columns):
-            for col in columns:
-                self.writecol(col)
-                print column
+            print row(0)
 
 
 '''

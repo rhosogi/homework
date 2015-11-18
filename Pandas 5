@@ -1,5 +1,5 @@
 '''
-##h Pandas Homework with IMDb data
+Pandas Homework with IMDb data
 '''
 
 '''
@@ -49,14 +49,10 @@ plt.xlabel('Movie Rating')
 plt.ylabel('Number of Movies')
 
 # convert the following content ratings to "UNRATED": NOT RATED, APPROVED, PASSED, GP
-movies_col=['star_rating', 'title', 'content_rating', 'genre', 'duration', 'actors_list']
-content_rating=['R', 'PG-13', 'PG', 'NOT RATED', 'APPROVED', 'UNRATED', 'G', 'PASSED', 'NC-17', 'X', 'GP', 'TV-MA']
-convert_unrated([convert_not rated, convert_approved, convert_passed, convert_gp])
-movies.content_rating('approved') + movies.content_rating('unrated') + movies.content_rating('passed') + movies.content_rating('GP')
-
+movies.rename(columns={'not rated':'unrated', 'approved':'unrated', 'passed':'unrated', 'gp':'unrated'})
 
 # convert the following content ratings to "NC-17": X, TV-MA
-
+movies.rename(columns={'x':'NC-17', 'tv-ma':'NC-17'})
 
 # count the number of missing values in each column
 movies.isnull().sum()
@@ -69,29 +65,29 @@ movies.content_rating.fillna(value='NA', inplace=True)
 # and compare that with the average star rating for movies shorter than 2 hours
 rating_bool = movies.duration > 120
 movies[rating_bool]
-movies[movies.duration > 120].star_rating.value_counts()
-
+movies[movies.duration > 120].star_rating.value_counts() 
 movies[movies.duration < 120].star_rating.value_counts() 
 
 
 # use a visualization to detect whether there is a relationship between duration and star rating
-
+movies.groupby('star_rating').mean().plot(kind= 'bar')
 
 # calculate the average duration for each genre
-
+movies.groupby(['genre']).duration.mean()
 
 '''
 ADVANCED LEVEL
 '''
 
 # visualize the relationship between content rating and duration
-
+movies.boxplot(column='duration', by='content_rating')
 
 # determine the top rated movie (by star rating) for each genre
+movies.groupby('star_rating').max()
 
 
 # check if there are multiple movies with the same title, and if so, determine if they are actually duplicates
-
+movies.duplicated().sum()
 
 # calculate the average star rating for each genre, but only include genres with at least 10 movies
 
